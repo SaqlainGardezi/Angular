@@ -2,16 +2,17 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-$conn = new mysqli("localhost", "root", "", "fyp");
+$conn = new mysqli("localhost", "root", "", "testing");
 
-$result = $conn->query("SELECT client_name, client_contact FROM client");
+$result = $conn->query("SELECT first_name, last_name, id FROM table_user");
 
 $outp = "";
 while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     if ($outp != "") {$outp .= ",";}
-    $outp .= '{"name":"'  . $rs["client_name"] . '",';
+    $outp .= '{"fname":"'  . $rs["first_name"] . '",';
+    $outp .= '"id" : "' . $rs["id"] . '",';
 
-    $outp .= '"contact":"'. $rs["client_contact"]     . '"}';
+    $outp .= '"lname":"'. $rs["last_name"]     . '"}';
 }
 $outp ='{"records":['.$outp.']}';
 $conn->close();
